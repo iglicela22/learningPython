@@ -4,12 +4,16 @@ ravenclaw = 0
 hufflepuff = 0
 slytherin = 0
 
-print(
-    "Welcome to the sorting hat game,today we decide on where each of our prescious students go"
-)
+print("Welcome to the sorting hat game,today we decide on where each of our prescious students go \n")
+
 
 # Question 1
-answer1 = int(input("Do you like " " 1) Dawn" " 2) Dusk "))
+
+DamnOrDusk_list = ['Dawmn','Dusk']
+for i,DamnOrDusk_name in enumerate(DamnOrDusk_list):
+    print(f'{i+1}) {DamnOrDusk_name}')
+
+answer1 = int(input('\nWhich one do you dare chose: '))
 
 if answer1 == 1:
     gryffindor = gryffindor + 1
@@ -25,7 +29,7 @@ else:
 character_list = ["The Good", "The Great", "The Wise", "The Bold"]
 for i, character_name in enumerate(character_list):
     print(f"{i+1}) {character_name}")
-answer2 = int(input("When I am dead,I want people to remember me as: "))
+answer2 = int(input('When I am dead,I want people to remember me as: '))
 1
 
 if answer2 == 1:
