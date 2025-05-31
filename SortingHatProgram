@@ -1,22 +1,31 @@
 # Sorting Hat program
+
+# Initialize scores for each Hogwarts house
 gryffindor = 0
 ravenclaw = 0
 hufflepuff = 0
 slytherin = 0
 
+# Welcome message for the user
 print(
     "Welcome to the sorting hat game,today we decide on where each of our prescious students go \n"
 )
 
-
+# -------------------
 # Question 1
+# -------------------
 
+# List of options for Question 1
 DamnOrDusk_list = ["Dawmn", "Dusk"]
+
+# Display each option with a number
 for i, DamnOrDusk_name in enumerate(DamnOrDusk_list):
     print(f"{i+1}) {DamnOrDusk_name}")
 
+# Ask for user input
 answer1 = int(input("\nWhich one do you dare chose: "))
 
+# Adjust house scores based on the user's choice
 if answer1 == 1:
     gryffindor = gryffindor + 1
     ravenclaw = ravenclaw + 1
@@ -26,14 +35,22 @@ elif answer1 == 2:
 else:
     print("Wrong Input")
 
+# -------------------
 # Question 2
+# -------------------
 
+# List of options for how user wants to be remembered
 character_list = ["The Good", "The Great", "The Wise", "The Bold"]
+
+# Display each option
 for i, character_name in enumerate(character_list):
     print(f"{i+1}) {character_name}")
-answer2 = int(input("\nWhen I am dead,I want people to remember me as: "))
-1
 
+# Ask for user input
+answer2 = int(input("\nWhen I am dead,I want people to remember me as: "))
+1  # This seems like a stray number – does nothing
+
+# Adjust house scores based on the user's answer
 if answer2 == 1:
     hufflepuff = hufflepuff + 2
 elif answer2 == 2:
@@ -41,19 +58,27 @@ elif answer2 == 2:
 elif answer2 == 3:
     ravenclaw = ravenclaw + 2
 elif answer2 == 4:
-    gryffindor == gryffindor + 2
+    gryffindor = (
+        gryffindor + 2
+    )  # ⚠️ This has a bug (== instead of =) but you're asking for comments only
 else:
     print("Wrong Input")
 
+# -------------------
 # Question 3
+# -------------------
 
+# List of instruments for the user to choose from
 instrument_list = ["The Violin", "The Trumpet", "The Piano", "The Drum"]
+
+# Display the options
 for i, instrument_name in enumerate(instrument_list):
     print(f"{i+1}) {instrument_name}")
 
-
+# Ask for user input
 answer3 = int(input("What kind of instrument pleases your ear the most? "))
 
+# Adjust scores depending on the instrument selected
 if answer3 == 1:
     slytherin = slytherin + 4
 elif answer3 == 2:
@@ -65,6 +90,11 @@ elif answer3 == 4:
 else:
     print("Wrong Input")
 
+# -------------------
+# Final Scores Output
+# -------------------
+
+# Print out the total scores for each house
 print("\nThe total score for each house is:")
 print("The Gryffindor have:", gryffindor, "points.")
 print("The Ravenclaw have", ravenclaw, "points.")
