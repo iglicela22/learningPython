@@ -64,7 +64,7 @@ def home():
         # Redirect to avoid form resubmission
         return redirect(url_for("home"))
 
-    # Fetch all tasks from the database for displa
+    # Fetch all tasks from the database for display
     conn = get_db_connection()
     tasks = conn.execute("SELECT * FROM tasks").fetchall()
     conn.close()
