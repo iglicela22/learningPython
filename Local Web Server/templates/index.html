@@ -1,31 +1,65 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <title>To-Do List</title>
+  <!-- Bootstrap CSS for styling -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" />
 </head>
+
 <body class="bg-light">
 
   <div class="container py-5">
+    <!-- Page Title -->
     <h1 class="mb-4 text-center text-primary">My To-Do List</h1>
 
+    <!-- Task Input Form -->
     <form method="POST" action="/" class="input-group mb-3">
+      <!-- Input for new task content -->
       <input type="text" name="content" class="form-control" placeholder="Enter a new task" required>
+      <!-- Dropdown to select which list the task belongs to -->
+      <select name="list_name" class="form-select" style="max-width: 150px;">
+        <option value="General">General</option>
+        <option value="Work">Work</option>
+        <option value="Personal">Personal</option>
+      </select>
+      <!-- Submit button to add the task -->
       <button class="btn btn-primary" type="submit">Add Task</button>
     </form>
 
-    <ul class="list-group">
-      {% for task in tasks %}
-        <li class="list-group-item d-flex justify-content-between align-items-center">
-          {{ task.content }}
-          <a href="/delete/{{ task.id }}" class="btn btn-danger btn-sm">Delete</a>
-        </li>
-      {% else %}
-        <li class="list-group-item">No tasks yet!</li>
+    <!-- Group tasks by their list_name using Jinja2 logic -->
+    {% set lists = {} %}
+    {% for task in tasks %}
+    {% set _ = lists.setdefault(task.list_name, []).append(task) %}
+    {% endfor %}
+
+    <!-- Loop through each list and display its tasks -->
+    {% for list_name, items in lists.items() %}
+    <h4 class="mt-4">{{ list_name }}</h4> <!-- List name as a section header -->
+    <ul class="list-group mb-3">
+      {% for task in items %}
+      <li class="list-group-item d-flex justify-content-between align-items-center">
+        {{ task.content }} <!-- Task content, auto-escaped for safety -->
+        <!-- Delete button for each task -->
+        <a href="/delete/{{ task.id }}" class="btn btn-danger btn-sm">Delete</a>
+      </li>
       {% endfor %}
+      {% if items|length == 0 %}
+      <!-- Message if no tasks in this list -->
+      <li class="list-group-item">No tasks yet!</li>
+      {% endif %}
     </ul>
+    {% endfor %}
+    {% if lists|length == 0 %}
+    <!-- Message if there are no lists/tasks at all -->
+    <ul class="list-group">
+      <li class="list-group-item">No tasks yet!</li>
+    </ul>
+    {% endif %}
   </div>
 
+  <!-- Bootstrap JS for interactive components (optional for this app) -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>
