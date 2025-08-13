@@ -1,4 +1,5 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for 
+from datetime import datetime
 import sqlite3
 
 app = Flask(__name__)
@@ -15,6 +16,8 @@ def init_db():
             content TEXT NOT NULL,
             list_name TEXT NOT NULL DEFAULT 'General',   -- <-- Add comma here
             completed INTEGER NOT NULL DEFAULT 0         -- <-- 0 = not done, 1 = done
+            created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,  -- <-- Add created_at column
+            
         )
         """
     )
