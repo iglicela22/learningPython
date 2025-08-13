@@ -6,7 +6,6 @@ DB_NAME = "todo.db"
 
 
 def init_db():
-    """Initialize the database and create the tasks table if it doesn't exist."""
     print("Initializing database...")
     conn = sqlite3.connect(DB_NAME)
     conn.execute(
@@ -14,9 +13,10 @@ def init_db():
         CREATE TABLE IF NOT EXISTS tasks (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             content TEXT NOT NULL,
-            list_name TEXT NOT NULL DEFAULT 'General'
+            list_name TEXT NOT NULL DEFAULT 'General',   -- <-- Add comma here
+            completed INTEGER NOT NULL DEFAULT 0         -- <-- 0 = not done, 1 = done
         )
-    """
+        """
     )
     conn.commit()
     conn.close()
@@ -41,6 +41,16 @@ def delete(id):
     conn.commit()
     conn.close()
     return redirect("/")
+
+
+@app.route("/complete/<int:id>", methods=["POST"])
+def complete(id):
+    """Mark a task as completed."""
+    conn = get_db_connection()
+    conn.execute("UPDATE tasks SET completed = 1 WHERE id = ?", (id,))
+    conn.commit()
+    conn.close()
+    return redirect(url_for("home"))
 
 
 @app.route("/", methods=["GET", "POST"])
