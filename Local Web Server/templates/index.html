@@ -2,38 +2,33 @@
 <html>
 <head>
   <title>To-Do List</title>
-  <!-- Bootstrap CSS for styling -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" />
 </head>
 <body class="bg-secondary">
 
   <div class="container py-5">
-    <!-- Page Title -->
     <h1 class="mb-4 text-center text-dark">My To-Do List</h1>
 
-    <!-- Task Input Form -->
+    <!-- Add Task Form -->
     <form method="POST" action="/" class="input-group mb-3">
-      <!-- Input for new task content -->
       <input type="text" name="content" class="form-control" placeholder="Enter a new task" required>
-      <!-- Dropdown to select which list the task belongs to -->
       <select name="list_name" class="form-select" style="max-width: 150px;">
         <option value="General">General</option>
         <option value="Work">Work</option>
         <option value="Personal">Personal</option>
+        <option value="Done">Done</option>
       </select>
-      <!-- Submit button to add the task -->
       <button class="btn btn-primary" type="submit">Add Task</button>
     </form>
 
-    <!-- Group tasks by their list_name using Jinja2 logic -->
+    <!-- Group and display tasks -->
     {% set lists = {} %}
     {% for task in tasks %}
       {% set _ = lists.setdefault(task.list_name, []).append(task) %}
     {% endfor %}
 
-    <!-- Loop through each list and display its tasks -->
     {% for list_name, items in lists.items() %}
-      <h4 class="mt-4">{{ list_name }}</h4> <!-- List name as a section header -->
+      <h4 class="mt-4" {% if list_name == 'General' %} style="color: rgb(0,0,0);" {% endif %}>{{ list_name }}</h4>
       <ul class="list-group mb-3">
         {% for task in items %}
           <li class="list-group-item d-flex justify-content-between align-items-center">
@@ -46,25 +41,29 @@
                   <button class="btn btn-success btn-sm" type="submit">Completed</button>
                 </form>
               {% else %}
-                <span class="badge bg-success">Done</span>
+                <span class="text-success fw-bold">✅ Dsne</span>
               {% endif %}
               <a href="/delete/{{ task.id }}" class="btn btn-danger btn-sm ms-2">Delete</a>
             </div>
           </li>
         {% endfor %}
         {% if items|length == 0 %}
-          <!-- Message if no tasks in this list -->
           <li class="list-group-item">No tasks yet!</li>
         {% endif %}
       </ul>
     {% endfor %}
     {% if lists|length == 0 %}
-      <!-- Message if there are no lists/tasks at all -->
       <ul class="list-group">
         <li class="list-group-item">No tasks yet!</li>
       </ul>
     {% endif %}
   </div>
 
-  <!-- Bootstrap JS for interactive components (optional for this app) -->
-  <script src=
+  <!-- Livereload script for auto-refresh -->
+ <script>
+    document.write('<script src="http://' + (location.host || '127.0.0.1').split(':')[0] + 
+    ':35729/livereload.js?snipver=1"></' + 'script>');
+</script>
+
+</body>
+</html>
